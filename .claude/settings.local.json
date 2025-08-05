@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:tapmapapp.org)",
+      "WebFetch(domain:petcheckai.com)"
+    ],
+    "deny": []
+  }
+}
