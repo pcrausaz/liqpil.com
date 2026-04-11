@@ -200,6 +200,16 @@ main {
     height: 24px;
 }
 
+.link-kofi {
+    padding: 0.45rem;
+    line-height: 0;
+}
+
+.link-kofi img {
+    height: 24px;
+    width: auto;
+}
+
 .link-badge {
     padding: 0;
     background: transparent;
