@@ -4,238 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>liqpil - Mobile Apps</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #fafafa;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            background: white;
-            border-bottom: 1px solid #e5e5e5;
-            padding: 2rem 0;
-        }
-
-        .header-content {
-            text-align: center;
-        }
-
-        .logo {
-            height: 180px;
-            margin-bottom: -3rem;
-        }
-
-        .tagline {
-            font-size: 1.1rem;
-            color: #7f8c8d;
-            font-weight: 300;
-        }
-
-        main {
-            padding: 4rem 0;
-            min-height: 60vh;
-        }
-
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 3rem;
-            margin-bottom: 4rem;
-        }
-
-        .app-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
-            border: 1px solid #f0f0f0;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .app-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .app-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .app-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            margin-right: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            object-fit: contain;
-        }
-
-        .app-info h2 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
-        }
-
-        .app-status {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-released {
-            background: #e8f5e8;
-            color: #2d7d32;
-        }
-
-        .status-beta {
-            background: #fff3e0;
-            color: #f57c00;
-        }
-
-        .status-alpha {
-            background: #f3e5f5;
-            color: #8e24aa;
-        }
-
-        .app-description {
-            font-size: 1.1rem;
-            color: #5a6c7d;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-        }
-
-        .app-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .app-link {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.7rem 1.2rem;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
-
-        .link-appstore {
-            background: #000;
-            color: white;
-        }
-
-        .link-appstore:hover {
-            background: #333;
-        }
-
-        .link-beta {
-            background: #007aff;
-            color: white;
-        }
-
-        .link-beta:hover {
-            background: #0056d3;
-        }
-
-        .link-website {
-            background: white;
-            color: #666;
-            border-color: #ddd;
-        }
-
-        .link-website:hover {
-            background: #f8f9fa;
-            border-color: #bbb;
-        }
-
-        .link-disabled {
-            background: #f5f5f5;
-            color: #999;
-            cursor: not-allowed;
-        }
-
-        .link-status {
-            padding: 0.45rem;
-            line-height: 0;
-        }
-
-        .link-status img {
-            width: 24px;
-            height: 24px;
-        }
-
-        footer {
-            background: white;
-            border-top: 1px solid #e5e5e5;
-            padding: 2rem 0;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            text-align: center;
-            color: #95a5a6;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .apps-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .app-card {
-                padding: 2rem;
-            }
-
-            .app-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .app-icon {
-                margin-right: 0;
-                margin-bottom: 1rem;
-            }
-
-            .app-links {
-                justify-content: center;
-            }
-
-            .logo {
-                height: 130px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="assets/Liqpil-Logo.svg" alt="liqpil" class="logo">
+                <img src="/assets/Liqpil-Logo.svg" alt="liqpil" class="logo">
                 <p class="tagline">Mobile Applications</p>
             </div>
         </div>
@@ -246,7 +21,7 @@
             <div class="apps-grid">
                 <div class="app-card">
                     <div class="app-header">
-                        <img src="assets/TapMapApp.png" alt="Tap Map App" class="app-icon">
+                        <img src="/assets/TapMapApp.png" alt="Tap Map App" class="app-icon">
                         <div class="app-info">
                             <h2>Tap Map App</h2>
                             <span class="app-status status-released">Released</span>
@@ -256,16 +31,16 @@
                         Find affordable beer and discover local pubs with community-driven price sharing. Navigate to budget-friendly drinking spots and support local establishments while saving money on your nights out.
                     </p>
                     <div class="app-links">
-                        <a href="https://apps.apple.com/us/app/tap-map-app/id6745830369" class="app-link link-appstore" target="_blank" rel="noopener">App Store (iOS)</a>
-                        <a href="https://testflight.apple.com/join/1rDPxEhA" class="app-link link-beta" target="_blank" rel="noopener">TestFlight</a>
+                        <a href="https://apps.apple.com/us/app/tap-map-app/id6745830369" class="app-link link-badge" target="_blank" rel="noopener"><img src="/assets/app-store-badge.svg" alt="Download on the App Store"></a>
+                        <!-- <a href="https://testflight.apple.com/join/1rDPxEhA" class="app-link link-beta" target="_blank" rel="noopener">TestFlight</a> -->
                         <a href="https://tapmapapp.org" class="app-link link-website" target="_blank" rel="noopener">Website</a>
-                        <a href="https://status.tapmapapp.org/" class="app-link link-status" title="Service Status" target="_blank" rel="noopener"><img src="assets/status-icon.png" alt="Status"></a>
+                        <a href="https://status.tapmapapp.org/" class="app-link link-status" title="Service Status" target="_blank" rel="noopener"><img src="/assets/status-icon.png" alt="Status"></a>
                     </div>
                 </div>
 
                 <div class="app-card">
                     <div class="app-header">
-                        <img src="assets/PetCheckAI.svg" alt="Pet Check AI" class="app-icon">
+                        <img src="/assets/PetCheckAI.svg" alt="Pet Check AI" class="app-icon">
                         <div class="app-info">
                             <h2>Pet Check AI</h2>
                             <span class="app-status status-released">Released</span>
@@ -275,19 +50,19 @@
                         AI-powered health assessments for your pets, available 24/7. Get instant guidance on pet health concerns, prepare for vet visits, and build confidence in caring for your furry family members.
                     </p>
                     <div class="app-links">
-                        <a href="https://apps.apple.com/app/pet-check-ai/id6749246922" class="app-link link-appstore" target="_blank" rel="noopener">App Store (iOS)</a>
-                        <a href="https://testflight.apple.com/join/WVaABmKn" class="app-link link-beta" target="_blank" rel="noopener">TestFlight</a>
+                        <a href="https://apps.apple.com/app/pet-check-ai/id6749246922" class="app-link link-badge" target="_blank" rel="noopener"><img src="/assets/app-store-badge.svg" alt="Download on the App Store"></a>
+                        <!-- <a href="https://testflight.apple.com/join/WVaABmKn" class="app-link link-beta" target="_blank" rel="noopener">TestFlight</a> -->
                         <a href="https://petcheckai.com" class="app-link link-website" target="_blank" rel="noopener">Website</a>
-                        <a href="https://status.petcheckai.com/" class="app-link link-status" title="Service Status" target="_blank" rel="noopener"><img src="assets/status-icon.png" alt="Status"></a>
+                        <a href="https://status.petcheckai.com/" class="app-link link-status" title="Service Status" target="_blank" rel="noopener"><img src="/assets/status-icon.png" alt="Status"></a>
                     </div>
                 </div>
 
                 <div class="app-card">
                     <div class="app-header">
-                        <img src="assets/pagoda-icon-black.svg" alt="Pagoda" class="app-icon">
+                        <img src="/assets/pagoda-icon-black.svg" alt="Pagoda" class="app-icon">
                         <div class="app-info">
                             <h2>Pagoda</h2>
-                            <span class="app-status status-alpha">Alpha</span>
+                            <span class="app-status status-beta">Beta</span>
                         </div>
                     </div>
                     <p class="app-description">
@@ -299,7 +74,7 @@
                         <span class="app-link link-disabled">Google Play &mdash; Coming Soon</span>
                         <a href="https://testflight.apple.com/join/wqhDkQcf" class="app-link link-beta" target="_blank" rel="noopener">TestFlight</a>
                         <a href="https://play.google.com/apps/internaltest/4700637562547416733" class="app-link link-beta" target="_blank" rel="noopener">Google Play (Beta)</a>
-                        <a href="https://status.playpagoda.com/status/pagoda" class="app-link link-status" title="Service Status" target="_blank" rel="noopener"><img src="assets/status-icon.png" alt="Status"></a>
+                        <a href="https://status.playpagoda.com/status/pagoda" class="app-link link-status" title="Service Status" target="_blank" rel="noopener"><img src="/assets/status-icon.png" alt="Status"></a>
                     </div>
                 </div>
             </div>
