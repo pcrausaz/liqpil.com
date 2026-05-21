@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:tapmapapp.org)",
-      "WebFetch(domain:petcheckai.com)"
+      "WebFetch(domain:petcheckai.com)",
+      "Bash(git -C /Users/pascal/Documents/Sources/liqpil.com log --oneline)",
+      "Bash(git -C /Users/pascal/Documents/Sources/liqpil.com log --all --stat)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(echo \"Server PID: $!\" sleep 1 curl -sI http://localhost:8765/)",
+      "Read(//tmp/**)",
+      "Bash(git -C /Users/pascal/Documents/Sources/liqpil.com status --short)"
     ],
     "deny": []
   }
