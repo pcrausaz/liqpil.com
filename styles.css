@@ -210,6 +210,16 @@ main {
     width: auto;
 }
 
+.link-github {
+    background: #24292f;
+    color: white;
+    gap: 0.5rem;
+}
+
+.link-github:hover {
+    background: #1b1f24;
+}
+
 .link-badge {
     padding: 0;
     background: transparent;
