@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liqpil — animated wordmark studies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mark:#000000;
+    --accent:#000000;   /* artwork accent */
+    --ui:#35d0ba;        /* interface accent — kept legible on the dark shell */
+    --paper:#ffffff;
+    --dur:3s;
+    --spring:linear(0, 0.0333, 0.1149, 0.2227, 0.3409, 0.4584, 0.5682, 0.6663, 0.7505, 0.8206, 0.8772, 0.9215, 0.9551, 0.9797, 0.9969, 1.0082, 1.0151, 1.0186, 1.0197, 1.0192, 1.0177, 1.0156, 1.0133, 1.011, 1.0088, 1.0068, 1.0051, 1.0037, 1.0025, 1.0016, 1);
+
+    --ink:#0a0d12;
+    --panel:#11161d;
+    --rule:#1d2530;
+    --text:#c5d0dc;
+    --muted:#65758a;
+    --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--ink);color:var(--text);
+    font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding:clamp(20px,4vw,56px) clamp(16px,4vw,48px) 96px;
+  }
+
+  header{max-width:1000px;margin:0 auto 30px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  h1{font-size:clamp(22px,3vw,30px);font-weight:500;margin:0 0 10px;letter-spacing:-.012em}
+  header p{margin:0;max-width:60ch;color:var(--muted);font-size:14px;line-height:1.65}
+  header b{color:var(--text);font-weight:500}
+
+  .controls{
+    position:sticky;top:0;z-index:5;
+    max-width:1000px;margin:26px auto 36px;
+    display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;
+    padding:13px 18px;border:1px solid var(--rule);border-radius:10px;
+    background:rgba(17,22,29,.94);backdrop-filter:blur(8px);
+  }
+  .ctl{display:flex;align-items:center;gap:8px}
+  .ctl label,.switch{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted)}
+  input[type=color]{width:30px;height:26px;padding:0;border:1px solid var(--rule);
+    border-radius:6px;background:transparent;cursor:pointer}
+  input[type=range]{width:100px;accent-color:var(--ui)}
+  .val{font-family:var(--mono);font-size:11px;color:var(--muted);min-width:32px}
+  button{background:transparent;color:var(--text);border:1px solid var(--rule);
+    border-radius:6px;padding:6px 13px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.09em;text-transform:uppercase;cursor:pointer;transition:.16s}
+  button:hover{border-color:var(--ui);color:var(--ui)}
+  button:focus-visible,input:focus-visible{outline:2px solid var(--ui);outline-offset:2px}
+  .switch{display:flex;align-items:center;gap:7px;cursor:pointer}
+  .switch input{accent-color:var(--ui)}
+
+  .sheet{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+  .group{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);margin:16px 0 -6px;display:flex;align-items:center;gap:14px}
+  .group::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+  .card{border:1px solid var(--rule);border-radius:12px;background:var(--panel);overflow:hidden}
+  .card-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    padding:15px 20px;border-bottom:1px solid var(--rule)}
+  .idx{font-family:var(--mono);font-size:11px;color:var(--ui);letter-spacing:.1em}
+  .card-head h2{font-size:15px;font-weight:600;margin:0;letter-spacing:-.005em;white-space:nowrap}
+  .card-head .note{font-size:12.5px;color:var(--muted);margin:0;flex:1 1 300px;line-height:1.55}
+  .card-head .note code{font-family:var(--mono);font-size:11.5px;color:var(--text)}
+  .card-head .note b{color:var(--text);font-weight:500}
+  .card-head button{margin-left:auto}
+
+  .stage{position:relative;background:var(--paper);
+    padding:clamp(16px,2.6vw,30px) clamp(12px,4vw,44px);cursor:pointer}
+  .mark{display:block;width:100%;max-width:540px;margin:0 auto;position:relative;overflow:visible}
+  .mark path,.mark rect,.mark circle,.mark ellipse{fill:var(--mark)}
+  .axis-line{stroke:var(--accent);stroke-width:1.6;fill:none;opacity:0;
+    transform-box:view-box;transform-origin:512.65px 342px}
+
+/* ══ 01 · centre-out reveal ═══════════════════════════════════════ */
+  .mark .v1-rect{fill:#fff}
+  .run .v1-rect{animation:v1clip var(--dur) both}
+  .mark .seed{fill:var(--accent)}
+  .run .seedL{animation:seedGrow var(--dur) both, seedL var(--dur) both}
+  .run .seedR{animation:seedGrow var(--dur) both, seedR var(--dur) both}
+
+  @keyframes v1clip{
+    0%,25%   {x:512.65px;width:0px;    animation-timing-function:cubic-bezier(.5,0,.15,1)}
+    34%,39%  {x:478px;width:69.3px;    animation-timing-function:cubic-bezier(.5,0,.15,1)}
+    50%,55%  {x:366.9px;width:291.5px; animation-timing-function:cubic-bezier(.5,0,.15,1)}
+    66%,71%  {x:326.2px;width:372.9px; animation-timing-function:cubic-bezier(.5,0,.15,1)}
+    88%,100% {x:262.65px;width:500px}
+  }
+  @keyframes seedGrow{
+    0%  {y:360.25px;height:0;opacity:0}
+    7%  {y:349.1px;height:22.3px;opacity:1;animation-timing-function:cubic-bezier(.3,.8,.3,1)}
+    23% {y:278.1px;height:164.3px}
+    34% {y:278.1px;height:164.3px;opacity:1}
+    46%,100%{y:278.1px;height:164.3px;opacity:0}
+  }
+  @keyframes seedL{0%,25%{transform:translateX(0);animation-timing-function:cubic-bezier(.45,0,.15,1)}
+    34%,100%{transform:translateX(-23.5px)}}
+  @keyframes seedR{0%,25%{transform:translateX(0);animation-timing-function:cubic-bezier(.45,0,.15,1)}
+    34%,100%{transform:translateX(23.5px)}}
+
+/* ══ 02 · mirror unfold ═══════════════════════════════════════════ */
+  .v2 .half-l path{fill-opacity:0;stroke:var(--mark);stroke-width:1.8;stroke-linejoin:round;
+    stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+  .v2 .half-r{transform-box:view-box;transform-origin:512.65px 0;opacity:0}
+  .run.v2 .half-l path{animation:draw calc(var(--dur)*.17) ease-in-out both,
+                                  ink calc(var(--dur)*.14) ease-out both}
+  .run.v2 .half-r{animation:unfold calc(var(--dur)*.34) cubic-bezier(.55,0,.18,1) both;
+    animation-delay:calc(var(--dur)*.52)}
+  .run.v2 .axis-line{animation:axisFlash calc(var(--dur)*.34) ease-out both;
+    animation-delay:calc(var(--dur)*.5)}
+
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes ink{from{fill-opacity:0;stroke-opacity:1}to{fill-opacity:1;stroke-opacity:0}}
+  @keyframes unfold{0%{transform:scaleX(-1);opacity:0}14%{opacity:.9}52%{opacity:.45}
+    100%{transform:scaleX(1);opacity:1}}
+  @keyframes axisFlash{0%{opacity:0;transform:scaleY(0)}26%{opacity:.9;transform:scaleY(1)}
+    100%{opacity:0;transform:scaleY(1)}}
+
+/* ══ 03 · liquid fill ═════════════════════════════════════════════ */
+  .v3 .outline path{fill:none;stroke:var(--mark);stroke-width:2.2;stroke-linejoin:round}
+  .run.v3 .outline{animation:outlineIn calc(var(--dur)*.16) ease-out both,
+                              outlineOut calc(var(--dur)*.12) ease-in both;
+    animation-delay:0s,calc(var(--dur)*.88)}
+  .v3 .liquid{transform:translateY(0)}
+  .run.v3 .liquid{animation:rise calc(var(--dur)*.66) cubic-bezier(.42,0,.3,1) both;
+    animation-delay:calc(var(--dur)*.22)}
+  .run.v3 .wave{animation:slosh 2.1s linear infinite}
+  .v3 .droplet{fill:var(--accent);opacity:0}
+  .run.v3 .droplet{animation:drip calc(var(--dur)*.22) cubic-bezier(.5,0,.9,.6) both}
+
+  @keyframes outlineIn{from{opacity:0}to{opacity:1}}
+  @keyframes outlineOut{to{opacity:0}}
+  @keyframes rise{0%{transform:translateY(0)}82%{transform:translateY(-262px)}
+    91%{transform:translateY(-244px)}100%{transform:translateY(-254px)}}
+  @keyframes slosh{to{transform:translateX(-130px)}}
+  @keyframes drip{0%{opacity:0;transform:translateY(-140px) scaleY(.8)}22%{opacity:1}
+    82%{opacity:1;transform:translateY(96px) scaleY(1.25)}
+    100%{opacity:0;transform:translateY(112px) scaleY(1.25)}}
+
+/* ══ 04 · clasp ═══════════════════════════════════════════════════ */
+  .v4 .ltr{opacity:0;will-change:transform}
+  .run.v4 .ltr{animation-duration:calc(var(--dur)*.95),calc(var(--dur)*.14);
+    animation-fill-mode:both;animation-timing-function:cubic-bezier(.16,.62,.24,1),ease-out}
+  @supports (animation-timing-function:linear(0,1)){
+    .run.v4 .ltr{animation-timing-function:var(--spring),ease-out}}
+  .run.v4 .half-l .ltr{animation-name:claspL,fadeIn}
+  .run.v4 .half-r .ltr{animation-name:claspR,fadeIn}
+
+  @keyframes claspL{from{transform:translateX(-440px)}to{transform:translateX(0)}}
+  @keyframes claspR{from{transform:translateX(440px)} to{transform:translateX(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ══ 05 · wingfold ════════════════════════════════════════════════ */
+  .v5 .half-l,.v5 .half-r{transform-box:view-box;transform-origin:512.65px 342px;
+    opacity:0;will-change:transform}
+  .run.v5 .half-l,.run.v5 .half-r{
+    animation-duration:calc(var(--dur)*.8),calc(var(--dur)*.22);
+    animation-fill-mode:both;animation-timing-function:cubic-bezier(.45,0,.15,1),ease-out}
+  .run.v5 .half-l{animation-name:wingL,fadeIn}
+  .run.v5 .half-r{animation-name:wingR,fadeIn}
+
+  @keyframes wingL{from{transform:rotate(-52deg) scale(.86)}to{transform:rotate(0) scale(1)}}
+  @keyframes wingR{from{transform:rotate(52deg)  scale(.86)}to{transform:rotate(0) scale(1)}}
+
+/* ══ 06 · ambidextrous trace ══════════════════════════════════════ */
+  .v6 path{fill-opacity:0;stroke:var(--accent);stroke-width:2.2;stroke-linejoin:round;
+    stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+  .run.v6 path{animation:draw calc(var(--dur)*.34) cubic-bezier(.4,0,.3,1) both,
+                          ink6 calc(var(--dur)*.2) ease-out both}
+  @keyframes ink6{from{fill-opacity:0;stroke-opacity:1}to{fill-opacity:1;stroke-opacity:0}}
+
+/* ══ 07 · ink bleed ═══════════════════════════════════════════════ */
+  .v7 .bleed{fill:#fff}
+  .run.v7 .bleed{animation:bleed calc(var(--dur)*.82) cubic-bezier(.3,.05,.2,1) both}
+  @keyframes bleed{
+    0%  {x:512.65px;width:0px}
+    100%{x:242.65px;width:540px}
+  }
+
+/* ══ 08 · breathing ═══════════════════════════════════════════════ */
+  .v8 .half-l{animation:breatheL 5.4s ease-in-out infinite}
+  .v8 .half-r{animation:breatheR 5.4s ease-in-out infinite}
+  .v8 .dot{animation:bob 5.4s ease-in-out infinite;animation-delay:.5s}
+  @keyframes breatheL{0%,100%{transform:translateX(0)}50%{transform:translateX(-2.6px)}}
+  @keyframes breatheR{0%,100%{transform:translateX(0)}50%{transform:translateX(2.6px)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3.2px)}}
+
+/* ══ 09 · cell division ═══════════════════════════════════════════ */
+  .v9 .grow{transform-box:view-box}
+  .v9 .cell{fill:var(--accent)}
+  .v9 .pair-q .grow,.v9 .pair-i .grow,.v9 .pair-l .grow{transform:scale(.02,.55);opacity:0}
+  .run.v9 .cellL{animation:cellGrow var(--dur) both, cellL var(--dur) both}
+  .run.v9 .cellR{animation:cellGrow var(--dur) both, cellR var(--dur) both}
+  .run.v9 .pair-q .grow{animation:bud calc(var(--dur)*.22) cubic-bezier(.2,1.2,.36,1) both;
+    animation-delay:calc(var(--dur)*.29)}
+  .run.v9 .pair-i .grow{animation:bud calc(var(--dur)*.22) cubic-bezier(.2,1.2,.36,1) both;
+    animation-delay:calc(var(--dur)*.5)}
+  .run.v9 .pair-l .grow{animation:bud calc(var(--dur)*.24) cubic-bezier(.2,1.18,.36,1) both;
+    animation-delay:calc(var(--dur)*.68)}
+  /* each parent flexes as its child is pushed out */
+  .run.v9 .pair-q .flex{animation:flex calc(var(--dur)*.14) ease-out both;
+    animation-delay:calc(var(--dur)*.49)}
+  .run.v9 .pair-i .flex{animation:flex calc(var(--dur)*.14) ease-out both;
+    animation-delay:calc(var(--dur)*.67)}
+  /* the i dots pinch off the stems they were born from */
+  .v9 .dot{opacity:0}
+  .run.v9 .dot{animation:pinch calc(var(--dur)*.2) cubic-bezier(.24,1.4,.4,1) both;
+    animation-delay:calc(var(--dur)*.58)}
+
+  @keyframes cellGrow{
+    0%  {y:360.25px;height:0;opacity:0}
+    5%  {y:349.1px;height:22.3px;opacity:1;animation-timing-function:cubic-bezier(.3,.9,.3,1)}
+    10% {y:346.3px;height:27.9px}
+    14% {y:349.1px;height:22.3px}
+    22% {y:278.1px;height:164.3px;animation-timing-function:cubic-bezier(.5,0,.4,1)}
+    38% {y:278.1px;height:164.3px;opacity:1}
+    50%,100%{y:278.1px;height:164.3px;opacity:0}
+  }
+  @keyframes cellL{
+    0%,20%{transform:translateX(0) scaleX(1)}
+    26%   {transform:translateX(0) scaleX(.5);animation-timing-function:cubic-bezier(.3,0,.2,1)}
+    38%,100%{transform:translateX(-23.5px) scaleX(1)}
+  }
+  @keyframes cellR{
+    0%,20%{transform:translateX(0) scaleX(1)}
+    26%   {transform:translateX(0) scaleX(.5);animation-timing-function:cubic-bezier(.3,0,.2,1)}
+    38%,100%{transform:translateX(23.5px) scaleX(1)}
+  }
+  @keyframes bud{
+    0%  {transform:scale(.02,.55);opacity:0}
+    22% {opacity:1}
+    52% {transform:scale(.62,1.06)}
+    100%{transform:scale(1,1);opacity:1}
+  }
+  @keyframes flex{0%{transform:scale(1,1)}40%{transform:scale(1.035,.972)}100%{transform:scale(1,1)}}
+  @keyframes pinch{
+    0%  {opacity:0;transform:translateY(46px) scale(.28)}
+    30% {opacity:1}
+    68% {transform:translateY(-6px) scale(1.1)}
+    100%{opacity:1;transform:translateY(0) scale(1)}
+  }
+
+  footer{max-width:1000px;margin:40px auto 0;color:var(--muted);font-size:12.5px;line-height:1.75}
+  footer code{font-family:var(--mono);font-size:11.5px;color:var(--text)}
+  .specs{display:flex;flex-wrap:wrap;gap:6px 26px;margin:14px 0 0;padding:0;list-style:none;
+    font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+  .specs li span{color:var(--text)}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important}
+    .v1-rect{transform:scaleX(1)}
+    .seed,.cell,.droplet{display:none}
+    .v2 .half-l path{fill-opacity:1;stroke-opacity:0}
+    .v2 .half-r{opacity:1;transform:scaleX(1)}
+    .v3 .liquid{transform:translateY(-254px)}
+    .v3 .outline{opacity:0}
+    .v4 .ltr,.v5 .half-l,.v5 .half-r,.v9 .dot{opacity:1;transform:none}
+    .v6 path{fill-opacity:1;stroke-opacity:0}
+    .v7 .bleed{x:242.65px;width:540px}
+    .v9 .pair-q .grow,.v9 .pair-i .grow,.v9 .pair-l .grow{transform:scale(1,1);opacity:1}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Wordmark motion · liqpil</p>
+  <h1>Nine ways to move a symmetrical mark</h1>
+  <p>Built from your outlines, not a substitute face. Every study pivots on the same fact: your mark is a true mirror about <b>x&nbsp;=&nbsp;512.65</b>, the midpoint of the 24.6-unit gap between <b>q</b> and <b>p</b>. Click any panel to replay.</p>
+</header>
+
+<div class="controls">
+  <div class="ctl"><label for="mark">Mark</label><input type="color" id="mark" value="#000000"></div>
+  <div class="ctl"><label for="paper">Ground</label><input type="color" id="paper" value="#ffffff"></div>
+  <div class="ctl"><label for="accent">Accent</label><input type="color" id="accent" value="#000000"></div>
+  <div class="ctl">
+    <label for="speed">Duration</label>
+    <input type="range" id="speed" min="1.6" max="6" step="0.1" value="3">
+    <span class="val" id="speedOut">3.0s</span>
+  </div>
+  <label class="switch"><input type="checkbox" id="loop"> Loop</label>
+  <button id="invert">Invert</button>
+  <button id="playAll" style="margin-left:auto">Play all</button>
+</div>
+
+<div class="sheet" id="sheet"></div>
+
+<footer>
+  <p>Measured off <code>Liqpil-Logo.svg</code>. Nothing is redrawn — every frame is your own path data under a clip, a mask, or a transform.</p>
+  <ul class="specs">
+    <li>axis <span>512.65</span></li>
+    <li>stems <span>478.0–500.3 / 525.0–547.3</span></li>
+    <li>stem width <span>22.3</span></li>
+    <li>baseline <span>399.4</span></li>
+    <li>x-height <span>121.2</span></li>
+    <li>ascender <span>152.9</span></li>
+    <li>descender <span>442.4</span></li>
+  </ul>
+</footer>
+
+<script>
+const P = {"p": "M612,399.3C582.8,406.6 556.5,396.8 539.2,373C541.3,377.4 543.2,382 545.5,386.3C546.7,388.5 547.4,390.5 547.4,392.9C547.3,407.6 547.2,422.2 547.4,436.9C547.5,441 546.1,442.6 542,442.3C538.6,442.1 535.3,442.3 532,442.3C525.4,442.2 525.2,442 525.1,435.6C525.1,418.6 525.1,401.6 525.1,384.6C525.1,352.8 525,321 525,289.2C525,279 525.1,279 535.1,278.9C536.7,278.9 538.4,278.8 540.1,278.9C542.4,279.2 545.9,277.7 546.8,280.5C547.9,283.9 548.4,287.7 545.6,290.9C541.5,295.6 539.3,301.3 537.7,307.3C545.1,295.9 554.2,286.3 566.8,281C589.5,271.5 611.6,272.9 631.8,287.2C651.3,301 659.8,320.7 658.1,344.3C656.3,369.9 638.6,390.8 612,399.3M601.8,379.5C616.1,376.1 627.1,368.3 632.7,354.5C645.5,323 619.2,293.1 589,297.1C556.6,301.3 540.8,337.3 560.3,363.4C570.4,376.9 584.4,381.7 601.8,379.5z", "q": "M465.2,392.4C429.3,412.7 387.8,399.1 371.7,362.1C355.2,324.1 383.4,278.5 424.6,275.5C450.6,273.6 470.6,283.5 485.6,304.3C486.9,306.2 487.8,308.3 489.2,310.2C487.4,303.6 485,297.3 480.9,291.7C480.1,290.6 479.2,289.6 478.7,288.4C476.1,282.7 478.4,279 484.6,279C487.7,278.9 490.9,279.1 494,278.9C498.7,278.5 500.5,280.3 500.4,285.2C500.2,311.5 500.3,337.8 500.3,364.1C500.3,388.1 500.2,412.1 500.4,436C500.4,440.8 499.1,442.7 494.2,442.3C490.2,442 486.2,442.2 482.2,442.3C479.2,442.3 478,440.9 478,438.1C478,422.6 478,407.1 478.1,391.6C478.1,389.7 478.8,388.1 479.9,386.5C482.4,382.6 484.1,378.3 485.9,372.6C479.5,380.7 473.4,387.4 465.2,392.4M463.3,311.2C453.1,300.3 440.8,295.5 425.7,297.1C405.5,299.3 384.8,320.5 390.3,347.3C394.8,369.3 418.5,384.5 440.9,379.1C470.2,372.1 484.7,337.9 463.3,311.2z", "l2": "M756.2,356C756,362.1 756.4,367.8 755.5,373.4C753.2,388.1 742.7,398.2 728,399.2C723.2,399.5 718.4,399.2 713.5,399.4C710.5,399.5 709.4,398.2 709.5,395.2C709.6,391.6 709.4,387.9 709.1,384.3C708.7,379.8 710.4,377.6 715,378C716.7,378.2 718.3,378.1 720,378C728.5,377.7 732.8,373.7 733.6,365.1C733.8,363 733.8,360.8 733.8,358.6C733.8,323.6 733.8,288.7 733.8,253.7C733.8,246.7 733.9,246.7 740.7,246.6C756.2,246.5 756.2,246.5 756.2,262C756.2,293.2 756.2,324.3 756.2,356z", "l1": "M269.8,326C269.8,301.4 269.9,277.2 269.7,253.1C269.6,248 271.1,246.1 276.2,246.6C279.6,246.9 283.2,246.9 286.7,246.6C290.9,246.3 292.2,248.2 292.1,252.2C292,267.5 292.1,282.8 292.1,298.1C292.1,318.4 292,338.7 292,359.1C292,361.6 292.1,364.1 292.4,366.5C293.2,373.8 297.1,377.5 304.5,378C304.8,378 305.1,378 305.5,378.1C316.3,378.6 316.4,378.6 316.3,389.7C316.2,400.4 317.3,399.2 306.6,399.4C297.3,399.6 288.3,399 280.7,392.7C272.9,386.3 269.9,377.7 269.8,368C269.6,354.1 269.8,340.3 269.8,326z", "i1s": "M351.3,390C351.3,399.3 351.3,399.3 342.3,399.3C328.9,399.3 329,399.3 329,385.8C329,352.3 329,318.8 329,285.4C329,278.3 329,278.2 336.2,278.1C338.9,278.1 341.6,278.1 344.2,278.1C351.2,278.2 351.3,278.2 351.3,285C351.3,313.7 351.3,342.3 351.3,371C351.3,377.1 351.3,383.3 351.3,390z", "i2s": "M674.7,346C674.7,325.2 674.8,304.9 674.6,284.6C674.5,280.2 675.7,278.1 680.4,278.5C683.4,278.7 686.4,278.1 689.4,278.1C696.3,278.2 696.4,278.3 696.4,285.1C696.4,318.2 696.4,351.3 696.4,384.4C696.4,388.1 696.4,391.7 696.4,395.4C696.5,398.1 695.3,399.5 692.6,399.3C692.4,399.3 692.2,399.3 692.1,399.3C674.7,400.3 674.7,400.3 674.7,382.9C674.7,370.8 674.7,358.6 674.7,346z", "i1d": "M345.6,268.1C337.1,270.5 329.4,267 327,259.8C324.5,252.6 328,244.8 334.9,242C342.1,239 349.9,242.2 353.3,249.3C356.7,256.5 354,263.4 345.6,268.1z", "i2d": "M699.3,256.7C697.7,264.4 692.8,268.9 686.1,269.2C680.2,269.6 673.9,265.4 671.7,259.7C669.7,254.4 671.7,247.6 676.3,244C681.6,239.8 688.5,239.7 693.8,243.7C698.1,246.8 699.7,251.1 699.3,256.7z"};
+const VB = '245 212 536 258';
+const AXIS = 512.65;
+const NS = 'http://www.w3.org/2000/svg';
+
+const ORDER = ['l1','i1s','i1d','q','p','i2s','i2d','l2'];
+const LEFT  = ['l1','i1s','i1d','q'];
+const RIGHT = ['p','i2s','i2d','l2'];
+
+const el = (n, a = {}) => { const e = document.createElementNS(NS, n);
+  for (const k in a) e.setAttribute(k, a[k]); return e; };
+const glyphs = (parent, keys, a = {}) =>
+  keys.map(k => { const p = el('path', Object.assign({d: P[k]}, a)); parent.appendChild(p); return p; });
+const axisLine = () => el('line', {class: 'axis-line', x1: AXIS, y1: 228, x2: AXIS, y2: 456});
+const origin = (node, x, y) => { node.style.transformBox = 'view-box';
+  node.style.transformOrigin = `${x}px ${y}px`; return node; };
+const seedBar = cls => el('rect', {class: cls, x: AXIS - 11.15, y: 278.1,
+  width: 22.3, height: 164.3, rx: 11.15});
+
+/* ── 01 · centre-out reveal ─────────────────────────────────────── */
+function v1(s){
+  const defs = el('defs');
+  // a clipPath cuts with a hard aliased edge that crawls as it travels; a
+  // blurred mask feathers it, so the reveal front glides instead of stepping
+  const f = el('filter', {id: 'v1soft', x: '-8%', y: '-8%', width: '116%', height: '116%'});
+  f.appendChild(el('feGaussianBlur', {stdDeviation: '1.6 0'}));
+  const m = el('mask', {id: 'v1mask', maskUnits: 'userSpaceOnUse',
+    x: 200, y: 160, width: 640, height: 420});
+  m.appendChild(el('rect', {class: 'v1-rect', x: AXIS, y: 180, width: 0, height: 380,
+    filter: 'url(#v1soft)'}));
+  defs.append(f, m); s.appendChild(defs);
+  const g = el('g', {mask: 'url(#v1mask)'}); glyphs(g, ORDER); s.appendChild(g);
+  s.appendChild(seedBar('seed seedL'));
+  s.appendChild(seedBar('seed seedR'));
+}
+
+/* ── 02 · mirror unfold ─────────────────────────────────────────── */
+function v2(s){
+  const L = el('g', {class: 'half-l'}), R = el('g', {class: 'half-r'});
+  const paths = glyphs(L, LEFT); glyphs(R, RIGHT);
+  s.append(L, R, axisLine());
+  const d = [0.02, 0.11, 0.17, 0.22];
+  paths.forEach((p, i) => {
+    p.style.setProperty('--len', p.getTotalLength().toFixed(1));
+    p.style.animationDelay = `calc(var(--dur)*${d[i]}), calc(var(--dur)*${(d[i] + 0.13).toFixed(3)})`;
+  });
+}
+
+/* ── 03 · liquid fill ───────────────────────────────────────────── */
+function wavePath(){
+  const amp = 6, len = 130, x0 = 60, x1 = 1180, top = 470;
+  let d = `M${x0} ${top}`;
+  for (let x = x0; x <= x1; x += 6)
+    d += ` L${x} ${(top + amp * Math.sin((x - x0) / len * Math.PI * 2)).toFixed(1)}`;
+  return d + ` L${x1} ${top + 90} L${x0} ${top + 90} Z`;
+}
+function v3(s){
+  const defs = el('defs'), cp = el('clipPath', {id: 'v3clip'});
+  glyphs(cp, ORDER); defs.appendChild(cp); s.appendChild(defs);
+  const out = el('g', {class: 'outline'}); glyphs(out, ORDER); s.appendChild(out);
+  const body = el('g', {'clip-path': 'url(#v3clip)'}), liq = el('g', {class: 'liquid'});
+  liq.appendChild(el('path', {class: 'wave', d: wavePath()}));
+  liq.appendChild(el('rect', {x: 180, y: 470, width: 700, height: 340}));
+  body.appendChild(liq); s.appendChild(body);
+  s.appendChild(el('ellipse', {class: 'droplet', cx: AXIS, cy: 300, rx: 6.5, ry: 8.5}));
+}
+
+/* ── 04 · clasp ─────────────────────────────────────────────────── */
+function v4(s){
+  const all = el('g', {class: 'all'});
+  const L = el('g', {class: 'half-l'}), R = el('g', {class: 'half-r'});
+  // outermost letters trail slightly, so each half arrives with a little drag
+  const stagger = {l1: .07, i1s: .04, i1d: .045, q: 0, p: 0, i2s: .04, i2d: .045, l2: .07};
+  [[L, LEFT], [R, RIGHT]].forEach(([host, keys]) => keys.forEach(k => {
+    const g = el('g', {class: 'ltr'});
+    glyphs(g, [k]);
+    g.style.animationDelay = `calc(var(--dur)*${stagger[k]})`;
+    host.appendChild(g);
+  }));
+  all.append(L, R); s.appendChild(all);
+}
+
+/* ── 05 · wingfold ──────────────────────────────────────────────── */
+function v5(s){
+  const L = el('g', {class: 'half-l'}), R = el('g', {class: 'half-r'});
+  glyphs(L, LEFT); glyphs(R, RIGHT);
+  s.append(L, R);
+}
+
+/* ── 06 · ambidextrous trace ────────────────────────────────────── */
+function v6(s){
+  const g = el('g');
+  const paths = glyphs(g, ORDER);
+  s.appendChild(g);
+  // mirrored pairs share a delay: both hands write outward at once
+  const d = {l1: .34, i1s: .19, i1d: .25, q: .03, p: .03, i2s: .19, i2d: .25, l2: .34};
+  paths.forEach((p, i) => {
+    const k = ORDER[i];
+    p.style.setProperty('--len', p.getTotalLength().toFixed(1));
+    p.style.animationDelay = `calc(var(--dur)*${d[k]}), calc(var(--dur)*${(d[k] + 0.26).toFixed(3)})`;
+  });
+}
+
+/* ── 07 · ink bleed ─────────────────────────────────────────────── */
+function v7(s){
+  const defs = el('defs');
+  const f = el('filter', {id: 'ragged', x: '-40%', y: '-40%', width: '180%', height: '180%'});
+  f.appendChild(el('feTurbulence', {type: 'fractalNoise', baseFrequency: '0.027 0.039',
+    numOctaves: 2, seed: 11, result: 'n'}));
+  f.appendChild(el('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: 23,
+    xChannelSelector: 'R', yChannelSelector: 'G', result: 'd'}));
+  f.appendChild(el('feGaussianBlur', {in: 'd', stdDeviation: 1.1}));
+  const m = el('mask', {id: 'bleedmask'});
+  m.appendChild(el('rect', {class: 'bleed', x: AXIS, y: 150, width: 0, height: 400,
+    filter: 'url(#ragged)'}));
+  defs.append(f, m); s.appendChild(defs);
+  const g = el('g', {mask: 'url(#bleedmask)'}); glyphs(g, ORDER); s.appendChild(g);
+}
+
+/* ── 08 · breathing (ambient loop) ──────────────────────────────── */
+function v8(s){
+  const L = el('g', {class: 'half-l'}), R = el('g', {class: 'half-r'});
+  glyphs(L, ['l1','i1s','q']); glyphs(R, ['p','i2s','l2']);
+  const d1 = el('g', {class: 'dot'}), d2 = el('g', {class: 'dot'});
+  glyphs(d1, ['i1d']); glyphs(d2, ['i2d']);
+  L.appendChild(d1); R.appendChild(d2);
+  s.append(L, R);
+}
+
+/* ── 09 · cell division ─────────────────────────────────────────── */
+// every letter is anchored on the edge facing the axis, so it unfurls
+// outward from the letter that produced it
+const ANCHOR = {
+  q:   [478.0, 342], p:   [547.3, 342],
+  i1s: [353.0, 342], i2s: [672.3, 342],
+  l1:  [316.3, 342], l2:  [709.0, 342]
+};
+const DOT_C = {i1d: [340.45, 255], i2d: [685.15, 255]};
+
+function v9(s){
+  const mk = (pairClass, keys) => {
+    const pair = el('g', {class: 'pair-' + pairClass});
+    keys.forEach(k => {
+      const flex = origin(el('g', {class: 'flex'}), ...ANCHOR[k]);
+      const grow = origin(el('g', {class: 'grow'}), ...ANCHOR[k]);
+      glyphs(grow, [k]);
+      // an i carries the dot it will later pinch off
+      if (k === 'i1s' || k === 'i2s'){
+        const dk = k === 'i1s' ? 'i1d' : 'i2d';
+        const dot = origin(el('g', {class: 'dot'}), ...DOT_C[dk]);
+        glyphs(dot, [dk]);
+        grow.appendChild(dot);
+      }
+      flex.appendChild(grow);
+      pair.appendChild(flex);
+    });
+    return pair;
+  };
+  s.appendChild(mk('q', ['q','p']));
+  s.appendChild(mk('i', ['i1s','i2s']));
+  s.appendChild(mk('l', ['l1','l2']));
+  s.appendChild(seedBar('cell cellL'));
+  s.appendChild(seedBar('cell cellR'));
+}
+
+/* ── assembly ───────────────────────────────────────────────────── */
+const CARDS = [
+  {g: 'Reveal', n: '01', t: 'Centre-out reveal', build: v1,
+   note: 'A dot stretches into one stem, splits into the stems of <b>q</b> and <b>p</b>, then the mark opens outward and holds at each pair: <code>| → qp → iqpi → liqpil</code>.'},
+  {n: '02', t: 'Mirror unfold', build: v2,
+   note: 'The left half draws itself in outline and inks. The right half then flips out of it across the axis — the reversed <b>l</b> arrives as what it actually is.'},
+  {n: '03', t: 'Liquid fill', build: v3,
+   note: 'One drop on the axis, then the level rises through the letterforms with a live surface. Descenders fill first, the <b>i</b> dots and ascenders last.'},
+
+  {g: 'Arrival', n: '04', t: 'Clasp', build: v4,
+   note: 'The inverse of 01. Both halves fly in from off-canvas, overshoot past their marks until the <b>q·p</b> gap nearly closes, and spring back. Outer letters drag a beat behind.'},
+  {n: '05', t: 'Wingfold', build: v5,
+   note: 'Both halves pivot on the axis point at <b>342</b>, swinging through 64° in opposite directions and folding flat. A hinge, not a slide.'},
+  {n: '06', t: 'Ambidextrous trace', build: v6,
+   note: 'Two pens start at the axis and write outward at the same instant, mirrored — <b>q·p</b>, then the <b>i</b>s, then the <b>l</b>s. The accent line inks to solid behind each stroke.'},
+
+  {g: 'Texture', n: '07', t: 'Ink bleed', build: v7,
+   note: 'A mask spreads from the axis through a turbulence field, so the leading edge is ragged and irregular — the mark blooms outward like ink wicking into paper.'},
+  {n: '08', t: 'Breathing', build: v8,
+   note: 'Not an intro — an idle state. The halves drift 2.6 units toward the axis and back on a 5.4s cycle, the <b>i</b> dots lagging half a beat. Runs continuously under a static header.'},
+
+  {g: 'Growth', n: '09', t: 'Cell division', build: v9,
+   note: 'Each letter is born from the one before it. The cell elongates, pinches, divides into the two stems; <b>q·p</b> unfurl from those, the <b>i</b>s bud off <b>q·p</b> and pinch their dots free, and the <b>l</b>s grow last. Each parent flexes as it pushes its child out.'}
+];
+
+const sheet = document.getElementById('sheet');
+CARDS.forEach(c => {
+  if (c.g){
+    const h = document.createElement('p');
+    h.className = 'group'; h.textContent = c.g;
+    sheet.appendChild(h);
+  }
+  const card = document.createElement('section');
+  card.className = 'card';
+  card.innerHTML =
+    `<div class="card-head"><span class="idx">${c.n}</span><h2>${c.t}</h2>` +
+    `<p class="note">${c.note}</p><button class="replay">Replay</button></div>` +
+    `<div class="stage v${+c.n}"></div>`;
+  sheet.appendChild(card);
+  const stage = card.querySelector('.stage');
+  const svg = el('svg', {viewBox: VB, class: 'mark', xmlns: NS});
+  stage.appendChild(svg);
+  c.build(svg);
+});
+
+/* ── playback ───────────────────────────────────────────────────── */
+const stages = [...document.querySelectorAll('.stage')];
+const play = s => { s.classList.remove('run'); void s.offsetWidth; s.classList.add('run'); };
+const playAll = () => stages.forEach(play);
+
+stages.forEach(s => s.addEventListener('click', () => play(s)));
+document.querySelectorAll('.replay').forEach(b =>
+  b.addEventListener('click', () => play(b.closest('.card').querySelector('.stage'))));
+document.getElementById('playAll').addEventListener('click', playAll);
+
+// play each study as it comes into view rather than all nine at once
+const io = new IntersectionObserver(
+  es => es.forEach(e => { if (e.isIntersecting) play(e.target); }), {threshold: 0.4});
+stages.forEach(s => io.observe(s));
+
+/* ── controls ───────────────────────────────────────────────────── */
+const root = document.documentElement;
+const bind = (id, prop) => document.getElementById(id)
+  .addEventListener('input', e => root.style.setProperty(prop, e.target.value));
+bind('mark', '--mark'); bind('paper', '--paper'); bind('accent', '--accent');
+
+document.getElementById('speed').addEventListener('input', e => {
+  root.style.setProperty('--dur', e.target.value + 's');
+  document.getElementById('speedOut').textContent = (+e.target.value).toFixed(1) + 's';
+});
+document.getElementById('loop').addEventListener('change', e => {
+  document.body.classList.toggle('loop', e.target.checked);
+  if (e.target.checked) playAll();
+});
+document.getElementById('invert').addEventListener('click', () => {
+  const m = document.getElementById('mark'), p = document.getElementById('paper');
+  [m.value, p.value] = [p.value, m.value];
+  root.style.setProperty('--mark', m.value);
+  root.style.setProperty('--paper', p.value);
+});
+
+const loopCSS = document.createElement('style');
+loopCSS.textContent = 'body.loop .stage.run *{animation-iteration-count:infinite}';
+document.head.appendChild(loopCSS);
+
+playAll();
+</script>
+</body>
+</html>

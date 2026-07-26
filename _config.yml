@@ -1,0 +1,5 @@
+# GitHub Pages builds this site with Jekyll from main:/ .
+# Everything here is plain static HTML — this file exists only to keep
+# working material out of the published site while it stays in the repo.
+exclude:
+  - research
