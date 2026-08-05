@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="TermWidget">
+    <defs>
+        <linearGradient id="tw-bg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#29304A"/>
+            <stop offset="1" stop-color="#121421"/>
+        </linearGradient>
+        <clipPath id="tw-body">
+            <rect x="56.32" y="56.32" width="911.36" height="911.36" rx="203.87" ry="203.87"/>
+        </clipPath>
+    </defs>
+    <rect x="56.32" y="56.32" width="911.36" height="911.36" rx="203.87" ry="203.87" fill="url(#tw-bg)"/>
+    <rect x="56.32" y="56.32" width="911.36" height="911.36" rx="203.87" ry="203.87"
+          fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="5.12" clip-path="url(#tw-body)"/>
+    <g fill="none" stroke-width="76.8" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="248.32,358.4 421.376,491.52 248.32,624.64" stroke="#739EFA"/>
+        <line x1="552.96" y1="624.64" x2="716.8" y2="624.64" stroke="#ffffff" stroke-opacity="0.92"/>
+    </g>
+</svg>
