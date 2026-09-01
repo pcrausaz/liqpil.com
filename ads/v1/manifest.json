@@ -75,6 +75,64 @@
           "wide3x": "https://liqpil.com/ads/v1/creatives/liqpil/wide-3x.png"
         }
       }
+    ],
+    "pagoda.banner": [
+      {
+        "id": "tapmap",
+        "promotes": "tapmap",
+        "weight": 2,
+        "url": {
+          "ios": "https://apps.apple.com/us/app/tap-map-app/id6745830369",
+          "android": "https://play.google.com/store/apps/details?id=com.askpascal.tinnies",
+          "web": "https://liqpil.com/tapmapapp/"
+        },
+        "bg": ["#F7E9C8"],
+        "start": "2026-09-01",
+        "assets": {
+          "png1x": "https://liqpil.com/ads/v1/creatives/tapmap/banner-1x.png",
+          "png2x": "https://liqpil.com/ads/v1/creatives/tapmap/banner-2x.png",
+          "png3x": "https://liqpil.com/ads/v1/creatives/tapmap/banner-3x.png",
+          "wide1x": "https://liqpil.com/ads/v1/creatives/tapmap/wide-1x.png",
+          "wide2x": "https://liqpil.com/ads/v1/creatives/tapmap/wide-2x.png",
+          "wide3x": "https://liqpil.com/ads/v1/creatives/tapmap/wide-3x.png"
+        }
+      },
+      {
+        "id": "petcheckai",
+        "promotes": "petcheckai",
+        "weight": 2,
+        "url": {
+          "ios": "https://apps.apple.com/app/pet-check-ai/id6749246922",
+          "android": "https://play.google.com/store/apps/details?id=com.askpascal.petcheck",
+          "web": "https://liqpil.com/petcheckai/"
+        },
+        "bg": ["#DCEDE4"],
+        "start": "2026-09-01",
+        "assets": {
+          "png1x": "https://liqpil.com/ads/v1/creatives/petcheckai/banner-1x.png",
+          "png2x": "https://liqpil.com/ads/v1/creatives/petcheckai/banner-2x.png",
+          "png3x": "https://liqpil.com/ads/v1/creatives/petcheckai/banner-3x.png",
+          "wide1x": "https://liqpil.com/ads/v1/creatives/petcheckai/wide-1x.png",
+          "wide2x": "https://liqpil.com/ads/v1/creatives/petcheckai/wide-2x.png",
+          "wide3x": "https://liqpil.com/ads/v1/creatives/petcheckai/wide-3x.png"
+        }
+      },
+      {
+        "id": "liqpil",
+        "promotes": "liqpil",
+        "weight": 1,
+        "url": "https://liqpil.com",
+        "bg": ["#F5E3B3"],
+        "start": "2026-09-01",
+        "assets": {
+          "png1x": "https://liqpil.com/ads/v1/creatives/liqpil/banner-1x.png",
+          "png2x": "https://liqpil.com/ads/v1/creatives/liqpil/banner-2x.png",
+          "png3x": "https://liqpil.com/ads/v1/creatives/liqpil/banner-3x.png",
+          "wide1x": "https://liqpil.com/ads/v1/creatives/liqpil/wide-1x.png",
+          "wide2x": "https://liqpil.com/ads/v1/creatives/liqpil/wide-2x.png",
+          "wide3x": "https://liqpil.com/ads/v1/creatives/liqpil/wide-3x.png"
+        }
+      }
     ]
   }
 }
