@@ -7,7 +7,9 @@
         "promotes": "premium",
         "weight": 3,
         "url": "app://premium",
-        "bg": ["#D9E2F5"],
+        "bg": [
+          "#D9E2F5"
+        ],
         "capPerDay": 6,
         "start": "2026-09-01",
         "assets": {
@@ -28,7 +30,9 @@
           "android": "https://play.google.com/store/apps/details?id=com.askpascal.petcheck",
           "web": "https://liqpil.com/petcheckai/"
         },
-        "bg": ["#DCEDE4"],
+        "bg": [
+          "#DCEDE4"
+        ],
         "start": "2026-09-01",
         "assets": {
           "png1x": "https://liqpil.com/ads/v1/creatives/petcheckai/banner-1x.png",
@@ -48,7 +52,9 @@
           "android": "https://play.google.com/store/apps/details?id=com.askpascal.pagoda",
           "web": "https://playpagoda.com"
         },
-        "bg": ["#E8E3DA"],
+        "bg": [
+          "#E8E3DA"
+        ],
         "start": "2026-09-01",
         "assets": {
           "png1x": "https://liqpil.com/ads/v1/creatives/pagoda/banner-1x.png",
@@ -64,7 +70,9 @@
         "promotes": "liqpil",
         "weight": 1,
         "url": "https://liqpil.com",
-        "bg": ["#F5E3B3"],
+        "bg": [
+          "#F5E3B3"
+        ],
         "start": "2026-09-01",
         "assets": {
           "png1x": "https://liqpil.com/ads/v1/creatives/liqpil/banner-1x.png",
@@ -86,7 +94,9 @@
           "android": "https://play.google.com/store/apps/details?id=com.askpascal.tinnies",
           "web": "https://liqpil.com/tapmapapp/"
         },
-        "bg": ["#F7E9C8"],
+        "bg": [
+          "#F7E9C8"
+        ],
         "start": "2026-09-01",
         "assets": {
           "png1x": "https://liqpil.com/ads/v1/creatives/tapmap/banner-1x.png",
@@ -106,7 +116,9 @@
           "android": "https://play.google.com/store/apps/details?id=com.askpascal.petcheck",
           "web": "https://liqpil.com/petcheckai/"
         },
-        "bg": ["#DCEDE4"],
+        "bg": [
+          "#DCEDE4"
+        ],
         "start": "2026-09-01",
         "assets": {
           "png1x": "https://liqpil.com/ads/v1/creatives/petcheckai/banner-1x.png",
@@ -122,7 +134,92 @@
         "promotes": "liqpil",
         "weight": 1,
         "url": "https://liqpil.com",
-        "bg": ["#F5E3B3"],
+        "bg": [
+          "#F5E3B3"
+        ],
+        "start": "2026-09-01",
+        "assets": {
+          "png1x": "https://liqpil.com/ads/v1/creatives/liqpil/banner-1x.png",
+          "png2x": "https://liqpil.com/ads/v1/creatives/liqpil/banner-2x.png",
+          "png3x": "https://liqpil.com/ads/v1/creatives/liqpil/banner-3x.png",
+          "wide1x": "https://liqpil.com/ads/v1/creatives/liqpil/wide-1x.png",
+          "wide2x": "https://liqpil.com/ads/v1/creatives/liqpil/wide-2x.png",
+          "wide3x": "https://liqpil.com/ads/v1/creatives/liqpil/wide-3x.png"
+        }
+      }
+    ],
+    "petcheck.banner": [
+      {
+        "id": "petcheck-premium-upsell",
+        "promotes": "premium",
+        "weight": 3,
+        "url": "app://premium",
+        "bg": [
+          "#DCEDE4"
+        ],
+        "capPerDay": 6,
+        "start": "2026-09-01",
+        "assets": {
+          "png1x": "https://liqpil.com/ads/v1/creatives/petcheck-premium-upsell/banner-1x.png",
+          "png2x": "https://liqpil.com/ads/v1/creatives/petcheck-premium-upsell/banner-2x.png",
+          "png3x": "https://liqpil.com/ads/v1/creatives/petcheck-premium-upsell/banner-3x.png",
+          "wide1x": "https://liqpil.com/ads/v1/creatives/petcheck-premium-upsell/wide-1x.png",
+          "wide2x": "https://liqpil.com/ads/v1/creatives/petcheck-premium-upsell/wide-2x.png",
+          "wide3x": "https://liqpil.com/ads/v1/creatives/petcheck-premium-upsell/wide-3x.png"
+        }
+      },
+      {
+        "id": "tapmap",
+        "promotes": "tapmap",
+        "weight": 2,
+        "url": {
+          "ios": "https://apps.apple.com/us/app/tap-map-app/id6745830369",
+          "android": "https://play.google.com/store/apps/details?id=com.askpascal.tinnies",
+          "web": "https://liqpil.com/tapmapapp/"
+        },
+        "bg": [
+          "#F7E9C8"
+        ],
+        "start": "2026-09-01",
+        "assets": {
+          "png1x": "https://liqpil.com/ads/v1/creatives/tapmap/banner-1x.png",
+          "png2x": "https://liqpil.com/ads/v1/creatives/tapmap/banner-2x.png",
+          "png3x": "https://liqpil.com/ads/v1/creatives/tapmap/banner-3x.png",
+          "wide1x": "https://liqpil.com/ads/v1/creatives/tapmap/wide-1x.png",
+          "wide2x": "https://liqpil.com/ads/v1/creatives/tapmap/wide-2x.png",
+          "wide3x": "https://liqpil.com/ads/v1/creatives/tapmap/wide-3x.png"
+        }
+      },
+      {
+        "id": "pagoda",
+        "promotes": "pagoda",
+        "weight": 2,
+        "url": {
+          "ios": "https://apps.apple.com/us/app/pagoda-plus/id6761141080",
+          "android": "https://play.google.com/store/apps/details?id=com.askpascal.pagoda",
+          "web": "https://playpagoda.com"
+        },
+        "bg": [
+          "#E8E3DA"
+        ],
+        "start": "2026-09-01",
+        "assets": {
+          "png1x": "https://liqpil.com/ads/v1/creatives/pagoda/banner-1x.png",
+          "png2x": "https://liqpil.com/ads/v1/creatives/pagoda/banner-2x.png",
+          "png3x": "https://liqpil.com/ads/v1/creatives/pagoda/banner-3x.png",
+          "wide1x": "https://liqpil.com/ads/v1/creatives/pagoda/wide-1x.png",
+          "wide2x": "https://liqpil.com/ads/v1/creatives/pagoda/wide-2x.png",
+          "wide3x": "https://liqpil.com/ads/v1/creatives/pagoda/wide-3x.png"
+        }
+      },
+      {
+        "id": "liqpil",
+        "promotes": "liqpil",
+        "weight": 1,
+        "url": "https://liqpil.com",
+        "bg": [
+          "#F5E3B3"
+        ],
         "start": "2026-09-01",
         "assets": {
           "png1x": "https://liqpil.com/ads/v1/creatives/liqpil/banner-1x.png",
