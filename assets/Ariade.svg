@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Ariade icon</title>
+  <desc id="desc">A guiding thread forming an abstract letter A.</desc>
+  <rect width="512" height="512" rx="112" fill="#102A43"/>
+  <path d="M124 352C124 275 179 210 256 210C333 210 388 275 388 352" fill="none" stroke="#D9EAF3" stroke-linecap="round" stroke-width="26"/>
+  <path d="M174 352L256 143L338 352M206 280H306" fill="none" stroke="#F7B267" stroke-linecap="round" stroke-linejoin="round" stroke-width="26"/>
+  <circle cx="124" cy="352" r="18" fill="#F7B267"/>
+  <circle cx="388" cy="352" r="18" fill="#D9EAF3"/>
+</svg>

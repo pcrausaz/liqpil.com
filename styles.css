@@ -126,6 +126,8 @@ main {
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
     border: 1px solid #f0f0f0;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .app-card:hover {
@@ -165,6 +167,18 @@ main {
     letter-spacing: 0.5px;
 }
 
+.app-status-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* status and Ko-fi icons sit beside the release pill, so drop the button padding */
+.app-status-row .link-status,
+.app-status-row .link-kofi {
+    padding: 0.2rem;
+}
+
 .status-released {
     background: #e8f5e8;
     color: #2d7d32;
@@ -185,6 +199,8 @@ main {
     color: #5a6c7d;
     line-height: 1.7;
     margin-bottom: 2rem;
+    /* pushes the link row to the bottom so rows line up across a grid row */
+    flex-grow: 1;
 }
 
 .app-links {
@@ -303,6 +319,19 @@ footer {
     font-size: 0.9rem;
 }
 
+/* Wide screens: widen the home grid so a third column fits at the same
+   ~500px tile width as the two-column layout, instead of squeezing three
+   tiles into the 1200px container. */
+@media (min-width: 1600px) {
+    .container-wide {
+        max-width: 1760px;
+    }
+
+    .container-wide .apps-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .apps-grid {
         grid-template-columns: 1fr;
@@ -324,6 +353,10 @@ footer {
     }
 
     .app-links {
+        justify-content: center;
+    }
+
+    .app-status-row {
         justify-content: center;
     }
 
