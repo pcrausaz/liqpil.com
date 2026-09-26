@@ -287,9 +287,15 @@ main {
     background: #1b1f24;
 }
 
+/* Badges are link backgrounds, not <img>: Safari Live Text turns the wording
+   of an <img> into selectable text that swallows clicks, whatever the CSS */
 .link-badge {
     padding: 0;
-    background: transparent;
+    height: 44px;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
     border: none;
     line-height: 0;
     transition: opacity 0.2s ease;
@@ -297,17 +303,22 @@ main {
 
 .link-badge:hover {
     opacity: 0.8;
-    background: transparent;
+    background-color: transparent;
 }
 
-.link-badge img {
-    height: 44px;
-    width: auto;
-    display: block;
-    /* Safari Live Text makes the badge wording selectable and swallows clicks; hand them to the link */
-    pointer-events: none;
-    -webkit-user-select: none;
-    user-select: none;
+.badge-app-store {
+    aspect-ratio: 119.66407 / 40;
+    background-image: url(/assets/app-store-badge.svg);
+}
+
+.badge-mac-app-store {
+    aspect-ratio: 156.10054 / 40;
+    background-image: url(/assets/mac-app-store-badge.svg);
+}
+
+.badge-google-play {
+    aspect-ratio: 238.96 / 70.87;
+    background-image: url(/assets/google-play-badge.svg);
 }
 
 footer {
