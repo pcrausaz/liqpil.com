@@ -304,6 +304,10 @@ main {
     height: 44px;
     width: auto;
     display: block;
+    /* Safari Live Text makes the badge wording selectable and swallows clicks; hand them to the link */
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 footer {
