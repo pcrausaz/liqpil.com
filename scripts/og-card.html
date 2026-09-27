@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- Link-preview card template, rendered to assets/og/*.png by og-images.mjs.
+     Query: ?icon=/assets/X.svg&name=App+Name  (no params = the home card) -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1200px; height: 630px; overflow: hidden; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: #fafafa;
+        color: #1a1a1a;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .home .mark { width: 820px; margin: -90px 0 -130px; }
+    .home .tagline { font-size: 44px; color: #555; }
+    .app { display: flex; align-items: center; gap: 64px; padding: 0 90px; width: 100%; }
+    .app .icon { width: 300px; height: 300px; border-radius: 66px; flex: none; object-fit: contain; }
+    .app h1 { font-size: 76px; line-height: 1.1; font-weight: 700; }
+    .app .by { display: flex; align-items: center; gap: 4px; margin-top: 18px; font-size: 32px; color: #666; }
+    .app .by img { height: 110px; margin: -30px -30px -30px -34px; }
+</style>
+</head>
+<body>
+<script>
+    const q = new URLSearchParams(location.search);
+    const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const logo = '../assets/Liqpil-Logo.svg';
+    if (q.has('name')) {
+        document.body.innerHTML = `<div class="app">
+            <img class="icon" src="..${esc(q.get('icon'))}" alt="">
+            <div><h1>${esc(q.get('name'))}</h1>
+            <div class="by">by <img src="${logo}" alt="liqpil"></div></div></div>`;
+    } else {
+        document.body.className = 'home';
+        document.body.innerHTML = `<img class="mark" src="${logo}" alt="liqpil">
+            <p class="tagline">Apps for everyday things</p>`;
+    }
+</script>
+</body>
+</html>
